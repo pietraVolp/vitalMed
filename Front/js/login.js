@@ -1,22 +1,8 @@
 'use strict'
 
 const button = document.getElementById('entrar')
-const toggleSenha = document.getElementById('toggleSenha')
 const senhaInput = document.getElementById('senha')
 
-// Função para alternar a visibilidade da senha
-const alternarVisibilidadeSenha = () => {
-  if (senhaInput.type === 'password') {
-    senhaInput.type = 'text'
-    toggleSenha.src = '/img/senha-icone.png' // Imagem do olho aberto
-  } else {
-    senhaInput.type = 'password'
-    toggleSenha.src = '/img/senha-icone.png' // Imagem do olho fechado
-  }
-}
-
-// Adicionar o evento de clique ao ícone do olho
-toggleSenha.addEventListener('click', alternarVisibilidadeSenha)
 
 const validarLogin = async () => {
   const email = document.getElementById('email').value.trim()
@@ -26,7 +12,7 @@ const validarLogin = async () => {
     alert('Por Favor Preencha todos os Campos !!')
   } else {
     try {
-      const response = await fetch('http://localhost:8080/v1/Vital/loginMedico', {
+      const response = await fetch(`http://localhost:8080//v1/vital/medico/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,8 +24,8 @@ const validarLogin = async () => {
 
       if (response.ok) {
         if (result.status_code === 200) {
-          localStorage.setItem('idC', result.usuario_id)
-          window.location.href = '../home.html'
+          localStorage.setItem('idC', result.idEmpresa)
+          window.location.href = '/Front/html/home.html'
         } else {
           alert(result.message || 'Ocorreu um erro inesperado.')
         }
